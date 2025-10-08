@@ -1,0 +1,13 @@
+Issue Type,Summary,Description,Epic Link,Priority
+Epic,Data,Synthetic data generation and documentation,,High
+Epic,Model,Baseline risk classifier and evaluation,,High
+Epic,API,FastAPI service and schemas,,High
+Epic,Dashboard,Streamlit GUI for SPM analytics,,Medium
+Epic,CI/CD,Linting, typing, tests, and builds,,Medium
+Epic,Deployment,Containerization and local deploy,,Medium
+Story,Generate synthetic SPM dataset,Create portfolios.csv with features,Data,High
+Story,Train RandomForest risk classifier,Save joblib artifact and metrics,Model,High
+Story,Implement /predict endpoint,Swagger docs and Pydantic models,API,High
+Story,Build risk dashboard,EDA and single prediction form,Dashboard,Medium
+Story,Add CI workflow,Ruff+mypy+pytest on push/PR,CI/CD,Medium
+Story,Containerize services,Dockerfile and docker-compose,Deployment,Medium

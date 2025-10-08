@@ -342,3 +342,33 @@ python -m app.data.generate && python -m app.models.train && pytest -q
 uvicorn app.api:app --reload &
 streamlit run app/dashboard.py
 ```
+
+---
+
+# Jira Process and Deployment Guide
+
+## Jira (Planning and Tracking)
+- Project: SPM (Scrum) with board columns Backlog → Selected → In Progress → In Review → Done
+- Issue Types: Epic, Story, Task, Bug; Epics for Data/Model/API/Dashboard/CI/Deployment
+- Branching: `feature/SPM-<issue>-<slug>`; commits and PRs reference issue key
+- Import template: see `docs/jira_import.csv`
+- Operating rhythm: 2-week sprints; ceremonies per `docs/scrum.md`
+
+## Deployment (Local Containers)
+Prerequisites: Docker and docker-compose
+
+Build and run both API and dashboard:
+```bash
+docker compose up --build
+# API: http://localhost:8000/docs
+# Dashboard: http://localhost:8501
+```
+
+Stop services:
+```bash
+docker compose down
+```
+
+Image details:
+- Single base image (`agile-spm-ml`) runs API by default (UVicorn)
+- Dashboard service overrides CMD to run Streamlit

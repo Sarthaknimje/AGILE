@@ -22,3 +22,5 @@ jobs:
         run: mypy app
       - name: Test
         run: pytest -q
+      - name: Build Docker image
+        run: docker build -t agile-spm-ml:ci .
