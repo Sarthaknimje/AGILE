@@ -5,20 +5,32 @@ This repository implements an Agile project for Machine Learning solutions in St
 ## Quick Start
 
 ```bash
-python -m venv .venv && source .venv/bin/activate
+python3 -m venv .venv && . .venv/bin/activate
 pip install -U pip
 pip install -r requirements.txt
+
+# Generate data and train
+python -m app.data.generate
+python -m app.models.train
 
 # Run tests
 pytest -q
 
-# Start API
+# Start API (Swagger at /docs)
 uvicorn app.api:app --reload
 
-# Start dashboard
+# Start GUI Dashboard
 streamlit run app/dashboard.py
 ```
 
-See `docs/` for the detailed Agile process, backlog, sprint plans, and the final report.
+## Documentation
+- Full report (Steps 1–14): `docs/report.md`
+- Initiation: `docs/initiation.md`
+- Backlog & Sprint Plan: `docs/backlog.md`
+- Architecture: `docs/architecture.md`
+- Data Dictionary: `docs/data.md`
+
+## Repository
+`https://github.com/Sarthaknimje/AGILE.git`
 
 
