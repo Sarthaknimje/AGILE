@@ -18,4 +18,6 @@ def test_train_and_save(tmp_path: Path):
 
     result = train_and_save(data_file)
     assert Path(result["model_path"]).exists()
-    assert "accuracy" in result["metrics"]["weighted avg"]
+    metrics = result["metrics"]
+    assert isinstance(metrics.get("accuracy"), float)
+    assert set(["precision", "recall", "f1-score"]).issubset(metrics["weighted avg"].keys())
