@@ -17,3 +17,5 @@ ENV PORT=8000
 
 # Default to API; override command to run Streamlit in docker-compose
 CMD ["uvicorn", "app.api:app", "--host", "0.0.0.0", "--port", "8000"]
+
+
