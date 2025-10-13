@@ -216,6 +216,10 @@ elif page == "🔮 AI Prediction":
                 svc = RiskModelService()
                 prediction = svc.predict([portfolio_data])[0]
                 
+                # Store data in session state for AI analysis page
+                st.session_state.portfolio_data = portfolio_data
+                st.session_state.prediction = prediction
+                
                 # Display results
                 st.markdown('<div class="prediction-result">', unsafe_allow_html=True)
                 st.subheader("🎯 AI Prediction Results")
@@ -261,6 +265,9 @@ elif page == "🔮 AI Prediction":
                 
                 st.markdown('</div>', unsafe_allow_html=True)
                 
+                # Show success message
+                st.success("✅ Prediction completed successfully!")
+                
             except Exception as e:
                 st.error(f"Error predicting. Ensure model is trained. Details: {e}")
                 st.info("Train model with: python -m app.models.train")
@@ -271,9 +278,10 @@ elif page == "🤖 AI Analysis":
     if gemini_client is None:
         st.error("Gemini API is not available. Please check your API key.")
     else:
-        # Get portfolio data from previous prediction or use defaults
-        if 'portfolio_data' in locals():
-            data = portfolio_data
+        # Get portfolio data from session state (from prediction page) or use defaults
+        if 'portfolio_data' in st.session_state:
+            data = st.session_state.portfolio_data
+            st.info("📊 Using data from your recent prediction")
         else:
             data = {
                 "avg_return": 0.06,
@@ -288,6 +296,12 @@ elif page == "🤖 AI Analysis":
                 "factor_value": 0.0,
                 "factor_mom": 0.0,
             }
+            st.info("📊 Using default portfolio data. Run a prediction first for personalized analysis.")
+        
+        # Show prediction result if available
+        if 'prediction' in st.session_state:
+            risk_color = {"Low": "🟢", "Medium": "🟡", "High": "🔴"}
+            st.success(f"🎯 **ML Prediction:** {risk_color.get(st.session_state.prediction, '⚪')} {st.session_state.prediction} Risk")
         
         st.subheader("📊 Current Portfolio Configuration")
         col1, col2 = st.columns(2)
