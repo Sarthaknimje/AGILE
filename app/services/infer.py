@@ -11,9 +11,16 @@ from app.core.config import settings
 class RiskModelService:
     def __init__(self, model_path: str | Path | None = None) -> None:
         self.model_path = Path(model_path or Path(settings.model_dir) / "risk_classifier.joblib")
-        obj = joblib.load(self.model_path)
-        self.pipeline = obj["pipeline"]
-        self.features: List[str] = list(obj["features"])  # preserve order
+        try:
+            obj = joblib.load(self.model_path)
+            self.pipeline = obj["pipeline"]
+            self.features: List[str] = list(obj["features"])  # preserve order
+        except Exception as e:
+            raise RuntimeError(
+                f"Failed to load model from {self.model_path}. "
+                f"This usually means the model needs to be retrained. "
+                f"Run: python -m app.models.train. Error: {e}"
+            )
 
     def predict(self, rows: List[Dict[str, Any]]) -> List[str]:
         df = pd.DataFrame(rows)
